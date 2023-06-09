@@ -47,7 +47,7 @@ You'll also need a [Supabase](https://supabase.com/) account for:
 - Clone the repository
 
 ```bash
-git clone https://github.com/charles-adedotun/knowledgelattice && cd chat-all-files
+git clone https://github.com/charles-adedotun/knowledgelattice && cd knowledgelattice
 ```
 
 - Create a virtual environment
