@@ -6,6 +6,10 @@ from langchain.schema import Document
 import streamlit as st
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from stats import add_usage
+from typing import List
+
+def remove_null_characters(data: str) -> str:
+    return data.replace('\u0000', '')
 
 def process_file(vector_store, file, loader_class, file_suffix, stats_db=None):
     documents = []
@@ -31,7 +35,10 @@ def process_file(vector_store, file, loader_class, file_suffix, stats_db=None):
     chunk_overlap = st.session_state['chunk_overlap']
 
     text_splitter = RecursiveCharacterTextSplitter.from_tiktoken_encoder(chunk_size=chunk_size, chunk_overlap=chunk_overlap)
-    
+
+    # Replace null characters from the document content
+    documents = [Document(page_content=remove_null_characters(doc.page_content), metadata=doc.metadata) for doc in documents]
+
     documents = text_splitter.split_documents(documents)
 
     # Add the document sha1 as metadata to each document

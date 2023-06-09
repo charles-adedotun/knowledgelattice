@@ -32,9 +32,16 @@ if anthropic_api_key:
 st.set_page_config(
     page_title="KnowledgeLattice",
     layout="wide",
-    initial_sidebar_state="expanded",
+    initial_sidebar_state="collapsed",  # sidebar collapsed by default
 )
 
+hide_streamlit_style = """
+            <style>
+            
+            footer {visibility: hidden;}
+            </style>
+            """
+st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
 st.title("📚 KnowledgeLattice 🌐")
 st.markdown("Store your knowledge in a vector store and query it with OpenAI's GPT-3/4 or any LLM.")
@@ -71,7 +78,7 @@ if 'max_tokens' not in st.session_state:
 
 # Create a radio button for user to choose between adding knowledge or asking a question
 user_choice = st.radio(
-    "Choose an action", ('Add Knowledge', 'Chat with your Brain', 'Forget', "Explore"))
+    "Choose an action", ('Add Knowledge', 'Chat with your Lattice', 'Forget', "Explore"))
 
 st.markdown("---\n\n")
 
@@ -92,7 +99,7 @@ if user_choice == 'Add Knowledge':
         file_uploader(supabase, vector_store)
     with col2:
         url_uploader(supabase, vector_store)
-elif user_choice == 'Chat with your Brain':
+elif user_choice == 'Chat with your Lattice':
     # Display model and temperature selection only when asking questions
     st.sidebar.title("Configuration")
     st.sidebar.markdown(

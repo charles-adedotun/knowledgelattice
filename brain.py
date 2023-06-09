@@ -17,7 +17,8 @@ def brain(supabase):
     # Display some metrics at the top of the page
     col1, col2 = st.columns(2)
     col1.metric(label="Total Documents", value=len(unique_data))
-    col2.metric(label="Total Size (bytes)", value=sum(int(doc['size']) for doc in unique_data))
+    total_size_kb = sum(int(doc['size']) for doc in unique_data) / 1024
+    col2.metric(label="Total Size (KB)", value=f"{total_size_kb:.2f}")
 
     for document in unique_data:
         # Create a unique key for each button by using the document name
